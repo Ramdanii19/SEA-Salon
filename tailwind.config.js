@@ -18,6 +18,13 @@ module.exports = {
     },
     extend: {
       colors: {
+        'gold': '#c67c4e',
+        'semigold': '#ce9c6b',
+        'semiblack': '#181818',
+        'semiblack2': '#1b1b1b',
+        'abuterang': '#bfbfbf',
+        'abugelap': '#808080',
+        'semiabu': '#343a40',
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -56,6 +63,9 @@ module.exports = {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      backgroundImage: {
+        "background": "url('/background.png')",
       },
       keyframes: {
         "accordion-down": {
