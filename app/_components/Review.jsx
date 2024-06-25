@@ -1,13 +1,27 @@
 "use client"
 import React from 'react'
 import Image from 'next/image'
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Rating, Star } from '@smastrom/react-rating'
 import '@smastrom/react-rating/style.css'
+import GlobalApi from '../_utils/GlobalApi';
 
 const Review = () => {
+  // const [testList, setTestList] = useState([]);
+  // useEffect(() => {
+  //   getTestList()
+  // }, [])
+
+
+  // const getTestList = () => {
+  //   GlobalApi.getTest().then(resp => {
+  //     console.log(resp.data.data);
+  //     setTestList(resp.data.data);
+  //   })
+  // }
+
   const [rating, setRating] = useState(0); // Initial value
   const [name, setName] = useState(''); // State for name
   const [comment, setComment] = useState(''); // State for comment
