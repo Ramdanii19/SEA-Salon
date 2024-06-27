@@ -9,23 +9,23 @@ import '@smastrom/react-rating/style.css'
 import GlobalApi from '../_utils/GlobalApi';
 
 const Review = () => {
-  // const [testList, setTestList] = useState([]);
-  // useEffect(() => {
-  //   getTestList()
-  // }, [])
+  const [ratting, setRatting] = useState([]);
+  const [name, setName] = useState('');
+  const [star, setStar] = useState(0);
+  const [comment, setComment] = useState('');
+  const [test, setTest] = useState(true)
+
+  useEffect(() => {
+    getRattingtList()
+  }, [test])
 
 
-  // const getTestList = () => {
-  //   GlobalApi.getTest().then(resp => {
-  //     console.log(resp.data.data);
-  //     setTestList(resp.data.data);
-  //   })
-  // }
-
-  const [rating, setRating] = useState(0); // Initial value
-  const [name, setName] = useState(''); // State for name
-  const [comment, setComment] = useState(''); // State for comment
-  const [submittedData, setSubmittedData] = useState([]); // State for submitted data
+  const getRattingtList = () => {
+    GlobalApi.getRattings().then(resp => {
+      console.log(resp.data.data);
+      setRatting(resp.data.data);
+    })
+  }
 
 
   const myStyles = {
@@ -34,12 +34,24 @@ const Review = () => {
     inactiveFillColor: '#fbf1a9'
   };
 
-  const handleSubmit = () => {
-    const newData = { name, rating, comment };
-    setSubmittedData([...submittedData, newData]);
-    setName('');
-    setRating(0);
-    setComment('');
+  const handleSubmit = async (e) => {
+    // e.preventDefault();
+
+    // Data yang akan dikirim ke Strapi
+    const data = {
+      data: {
+        Name: name,
+        Star: star,
+        Komentar: comment
+      }
+    };
+    try {
+      const response = await GlobalApi.postRating(data);
+      console.log('Data berhasil dikirim:', response.data);
+      setTest(!test)
+    } catch (error) {
+      console.error('Error mengirim data:', error);
+    }
   };
 
   return (
@@ -68,9 +80,9 @@ const Review = () => {
             <p>Rate</p>
             <Rating
               style={{ maxWidth: 250 }}
-              value={rating}
-              onChange={setRating}
               itemStyles={myStyles}
+              value={star}
+              onChange={setStar}
             />
           </div>
           <div className="items-center text-white mt-4">
@@ -84,7 +96,7 @@ const Review = () => {
             />
           </div>
           <div className="mt-4">
-            <Button className="px-6 py-2 border-2 border-white text-white" onClick={handleSubmit}>Submit</Button>
+            <Button type="button" className="px-6 py-2 border-2 border-white text-white" onClick={handleSubmit}>Submit</Button>
           </div>
         </div>
       </div>
@@ -93,16 +105,16 @@ const Review = () => {
           <p className="text-2xl font-bold">Ratting</p>
         </div>
         <div className="flex gap-5">
-          {submittedData.map((data, index) => (
+          {ratting.map((data, index) => (
             <div key={index} className="mt-4 w-1/3">
-              <p><strong>Nama:</strong> {data.name}</p>
+              <p><strong>Nama:</strong> {data.attributes.Name}</p>
               <p><Rating
                 style={{ maxWidth: 250 }}
-                value={data.rating}
-                onChange={setRating}
+                value={data.attributes.Star}
                 itemStyles={myStyles}
+                isDisabled
               /></p>
-              <p><strong>Komentar:</strong> {data.comment}</p>
+              <p><strong>Komentar:</strong> {data.attributes.Komentar}</p>
             </div>
           ))}
         </div>
