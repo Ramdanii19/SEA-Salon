@@ -7,13 +7,16 @@ import { Button } from "@/components/ui/button"
 import { Rating, Star } from '@smastrom/react-rating'
 import '@smastrom/react-rating/style.css'
 import GlobalApi from '../_utils/GlobalApi';
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
+
 
 const Review = () => {
   const [ratting, setRatting] = useState([]);
   const [name, setName] = useState('');
   const [star, setStar] = useState(0);
   const [comment, setComment] = useState('');
-  const [test, setTest] = useState(true)
+  const [test, setTest] = useState(true);
+  const { user } = useKindeBrowserClient();
 
   useEffect(() => {
     getRattingtList()
@@ -40,7 +43,7 @@ const Review = () => {
     // Data yang akan dikirim ke Strapi
     const data = {
       data: {
-        Name: name,
+        Name: user.given_name + " " + user.family_name,
         Star: star,
         Komentar: comment
       }
@@ -66,16 +69,6 @@ const Review = () => {
           className="mt-5"
         />
         <div className="mt-10">
-          <div className="items-center text-white">
-            <p>Nama</p>
-            <Input
-              type="text"
-              placeholder="Masukkan Nama Anda"
-              className="border-2 border-white"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </div>
           <div className="items-center text-white mt-4">
             <p>Rate</p>
             <Rating

@@ -13,8 +13,14 @@ const axiosClient = axios.create({
 
 const getRattings = () => axiosClient.get('/rattings?populate=*');
 const postRating = (data) => axiosClient.post('/rattings', data);
+const bookAppointment = (data) => axiosClient.post('/reservations', data);
+const services = (data) => axiosClient.post('/services', data);
+const getServices = (data) => axiosClient.get('/services?populate=*');
 
 export default {
   getRattings,
-  postRating
+  postRating,
+  bookAppointment,
+  services,
+  getServices
 }

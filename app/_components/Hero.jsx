@@ -2,6 +2,7 @@ import Image from 'next/image'
 import React from 'react'
 import { Button } from "@/components/ui/button"
 import Link from 'next/link'
+import Booking from './Booking'
 
 
 const Hero = () => {
@@ -28,9 +29,10 @@ const Hero = () => {
           </p>
         </div>
         <div className="flex justify-center lg:justify-start mt-6">
-          <Link href="/booking"><Button className="px-4 py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 lg:px-10 lg:py-5 xl:px-12 xl:py-6 border-2 border-white text-white bg-transparent">
+          {/* <Link href="/booking"><Button className="px-4 py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 lg:px-10 lg:py-5 xl:px-12 xl:py-6 border-2 border-white text-white bg-transparent">
             Get An Appointment!
-          </Button></Link>
+          </Button></Link> */}
+          <Booking />
         </div>
       </div>
     </div>

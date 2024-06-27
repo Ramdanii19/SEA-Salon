@@ -10,44 +10,94 @@ import {
   DialogClose,
   DialogFooter,
 } from "@/components/ui/dialog"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 import { Button } from '@/components/ui/button'
 import { Calendar } from "@/components/ui/calendar"
 import { CalendarDays, Clock } from 'lucide-react'
-
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
+import GlobalApi from '../_utils/GlobalApi'
+import { toast } from 'sonner'
 
 const Booking = () => {
 
+  const [services, setServices] = useState([]);
   const [date, setDate] = useState(new Date());
-  const [timeSlot, setTimeSlot] = useState();
+  const [timeSlot, setTimeSlot] = useState([]);
   const [selectedTimeSlot, setSelectedTimeSlot] = useState();
+  const { user } = useKindeBrowserClient();
+  const [reservation, setReservation] = useState();
+  const [duration, setDuration] = useState(1);
+
   const isPastDay = (day) => {
     return day <= new Date();
   }
 
   useEffect(() => {
-    getTime();
+    getServices()
   }, [])
 
-  const getTime = () => {
+  const getTime = (duration) => {
     const timeList = [];
-    for (let i = 10; i <= 12; i++) {
+    for (let i = 9; i <= 12; i += duration) {
       timeList.push({
-        time: i + ':00 AM'
-      })
-      timeList.push({
-        time: i + ':30 AM'
+        time: `${i}:00 AM`
       })
     }
-    for (let i = 1; i <= 6; i++) {
+    for (let i = 1; i <= 8; i += duration) {
       timeList.push({
-        time: i + ':00 AM'
-      })
-      timeList.push({
-        time: i + ':30 AM'
+        time: `${i}:00 PM`
       })
     }
     setTimeSlot(timeList)
+  }
+
+  const saveBooking = () => {
+    const data = {
+      data: {
+        User_id: user.id,
+        Username: user.given_name + " " + user.family_name,
+        Email: user.email,
+        Time: selectedTimeSlot,
+        Date: date,
+        Reservation: reservation
+      }
+    }
+
+    GlobalApi.bookAppointment(data).then(resp => {
+      console.log(resp);
+      if (resp) {
+        toast("Booking Confirmation will send on Email");
+      }
+    })
+  }
+
+  const getServices = () => {
+    GlobalApi.getServices().then(resp => {
+      console.log(resp.data.data);
+      setServices(resp.data.data);
+      if (resp.data.data.length > 0) {
+        const defaultDuration = resp.data.data[0].attributes.Durasi;
+        setDuration(defaultDuration);
+        getTime(defaultDuration);
+      }
+    })
+  }
+
+  const handleServiceChange = (value) => {
+    const selectedService = services.find(service => service.attributes.Name === value);
+    if (selectedService) {
+      const serviceDuration = selectedService.attributes.Durasi;
+      setDuration(serviceDuration);
+      getTime(serviceDuration);
+      setReservation(value);
+    }
   }
 
   return (
@@ -94,6 +144,21 @@ const Booking = () => {
                     ))}
                   </div>
                 </div>
+                <div className="">
+                  <Select onValueChange={handleServiceChange}>
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue placeholder="Select Service" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {services.map((data, index) => (
+                        <SelectItem value={data.attributes.Name} key={index}>{data.attributes.Name}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+              <div className="mt-5">
+                <h2>Duration: {duration} hour(s)</h2>
               </div>
             </div>
           </DialogDescription>
@@ -104,7 +169,7 @@ const Booking = () => {
               <Button type="button" className="text-red-500 border-red-500" variant="outline">
                 Close
               </Button>
-              <Button type="button" >
+              <Button type="button" disabled={!(date && selectedTimeSlot && reservation)} onClick={() => saveBooking()}>
                 Submit
               </Button>
             </>
