@@ -3,7 +3,7 @@ import Image from 'next/image'
 import React, { useState, useEffect } from 'react'
 import GlobalApi from '../_utils/GlobalApi';
 
-const Footer = () => {
+const Footer = ({ scrollToSection, heroRef, aboutRef, servicesRef, reviewRef, contactRef }) => {
   const [services, setServices] = useState([]);
 
   useEffect(() => {
@@ -48,15 +48,19 @@ const Footer = () => {
 
               <ul className="mt-8 space-y-4 text-sm">
                 <li>
-                  <a className="text-white transition hover:text-gold" href="#"> Home </a>
+                  <a className="text-white transition hover:text-gold" href="#" onClick={() => scrollToSection(heroRef)}> Home </a>
                 </li>
 
                 <li>
-                  <a className="text-white transition hover:text-gold" href="#"> Services </a>
+                  <a className="text-white transition hover:text-gold" href="#" onClick={() => scrollToSection(aboutRef)}> About </a>
                 </li>
 
                 <li>
-                  <a className="text-white transition hover:text-gold" href="#"> Kontak </a>
+                  <a className="text-white transition hover:text-gold" href="#" onClick={() => scrollToSection(servicesRef)}> Services </a>
+                </li>
+
+                <li>
+                  <a className="text-white transition hover:text-gold" href="#" onClick={() => scrollToSection(contactRef)}> Kontak </a>
                 </li>
 
               </ul>
@@ -154,4 +158,4 @@ const Footer = () => {
   )
 }
 
-export default Footer
+export default Footer;

@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React, { useRef } from 'react'
 import Header from "./_components/Header";
 import Footer from "./_components/Footer";
 import Hero from "./_components/Hero";
@@ -12,26 +12,48 @@ import Admin from './admin/page';
 const Dashboard = () => {
   const { user, permissions } = useKindeBrowserClient();
   const isAdmin = permissions?.permissions?.includes('admin');
-  return (
 
+  const heroRef = useRef(null);
+  const aboutRef = useRef(null);
+  const servicesRef = useRef(null);
+  const reviewRef = useRef(null);
+  const contactRef = useRef(null);
+
+  const scrollToSection = (sectionRef) => {
+    if (sectionRef.current) {
+      sectionRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  return (
     <div>
       {isAdmin ? (
         <>
-          <Header />
+          <Header scrollToSection={scrollToSection} heroRef={heroRef} aboutRef={aboutRef} servicesRef={servicesRef} reviewRef={reviewRef} contactRef={contactRef} />
           <Admin />
         </>
       ) : (
         <>
-          <Header />
-          <Hero />
-          <About />
-          <Services />
-          <Review />
-          <Footer />
+          <Header scrollToSection={scrollToSection} heroRef={heroRef} aboutRef={aboutRef} servicesRef={servicesRef} reviewRef={reviewRef} contactRef={contactRef} />
+          <div ref={heroRef}>
+            <Hero />
+          </div>
+          <div ref={aboutRef}>
+            <About />
+          </div>
+          <div ref={servicesRef}>
+            <Services />
+          </div>
+          <div ref={reviewRef}>
+            <Review />
+          </div>
+          <div ref={contactRef}>
+            <Footer scrollToSection={scrollToSection} heroRef={heroRef} aboutRef={aboutRef} servicesRef={servicesRef} reviewRef={reviewRef} contactRef={contactRef} />
+          </div>
         </>
       )}
     </div>
   );
 }
 
-export default Dashboard
+export default Dashboard;

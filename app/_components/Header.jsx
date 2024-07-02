@@ -1,7 +1,7 @@
 "use client"
 import Image from 'next/image'
 import Link from 'next/link'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Button } from "@/components/ui/button"
 import { LoginLink } from "@kinde-oss/kinde-auth-nextjs/components";
 import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
@@ -12,8 +12,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 
-const Header = () => {
-
+const Header = ({ scrollToSection, heroRef, aboutRef, servicesRef, reviewRef, contactRef }) => {
   const { user, permissions } = useKindeBrowserClient();
   const isAdmin = permissions?.permissions?.includes('admin');
 
@@ -29,9 +28,11 @@ const Header = () => {
             </>
             :
             <>
-              <li><Link href="" className='font-semibold cursor-pointer hover:text-gold hover:scale-105 transition-all ease-in-out'>Home</Link></li>
-              <li><Link href="" className='font-semibold cursor-pointer hover:text-gold hover:scale-105 transition-all ease-in-out'>Service</Link></li>
-              <li><Link href="" className='font-semibold cursor-pointer hover:text-gold hover:scale-105 transition-all ease-in-out'>Kontak</Link></li></>
+              <li><Link href="#" className='font-semibold cursor-pointer hover:text-gold hover:scale-105 transition-all ease-in-out' onClick={() => scrollToSection(heroRef)}>Home</Link></li>
+              <li><Link href="#" className='font-semibold cursor-pointer hover:text-gold hover:scale-105 transition-all ease-in-out' onClick={() => scrollToSection(aboutRef)}>About</Link></li>
+              <li><Link href="#" className='font-semibold cursor-pointer hover:text-gold hover:scale-105 transition-all ease-in-out' onClick={() => scrollToSection(servicesRef)}>Services</Link></li>
+              <li><Link href="#" className='font-semibold cursor-pointer hover:text-gold hover:scale-105 transition-all ease-in-out' onClick={() => scrollToSection(contactRef)}>Kontak</Link></li>
+            </>
           }
 
           {user ?
@@ -50,8 +51,6 @@ const Header = () => {
               </PopoverTrigger>
               <PopoverContent className="w-44">
                 <ul className="flex flex-col gap-2">
-                  {/* <li className="cursor-pointer hover:bg-slate-100 p-2 rounded-md">Profile</li>
-                  <li className="cursor-pointer hover:bg-slate-100 p-2 rounded-md">My Booking</li> */}
                   <li className="cursor-pointer hover:bg-slate-100 p-2 rounded-md"><LogoutLink>Log out</LogoutLink></li>
                 </ul>
               </PopoverContent>
@@ -62,7 +61,7 @@ const Header = () => {
         </ul>
       </div>
     </div>
-  )
+  );
 }
 
-export default Header
+export default Header;
