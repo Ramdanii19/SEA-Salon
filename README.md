@@ -40,8 +40,8 @@ KINDE_POST_LOGIN_REDIRECT_URL=http://localhost:3000/
 
 Login Admin
 ```bash
-  user    : admin
-  password: @admin123
+  username  : admin
+  password  : @admin123
 ```
 
 ## Tech Stack
