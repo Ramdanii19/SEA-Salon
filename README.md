@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# SEA Salon - Fullstack NextJS-TS
 
-## Getting Started
+Welcome to MovieTix, your ultimate destination for purchasing tickets to the latest blockbusters! With our user-friendly website, you can effortlessly browse through a wide selection of movies, view showtimes at your favorite theaters, and secure your tickets in just a few clicks.
 
-First, run the development server:
+## Run Locally
+
+Clone the project
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+  https://github.com/Ramdanii19/SEA-Salon.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Go to the project directory
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+```bash
+  cd SEA-Salon
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Install dependencies (Minimal NodeJS v18)
 
-## Learn More
+```bash
+  yarn install
+```
 
-To learn more about Next.js, take a look at the following resources:
+Start the server
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+  yarn dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+ENV 
+```bash  NEXT_PUBLIC_STRAPI_API_KEY=696e237c236ea5cd61589184666ed721457c151cf911407a5d25b9953e552acfbe7e202746ec5df7dc8753b34d593e1da1ac2b962ac0d7ab5310c77f15215059cc17b7a608e4caf83c392d1522becfd9f29fbb7eee70bfa37cf3968de9413373379663434fd0e28f381d96f8588afe3ebe7c9c01655fa992ff2e0c91dad00973
+KINDE_CLIENT_ID=72466ea13fe344369c161e20d7203803
+KINDE_CLIENT_SECRET=WfDJBO3uu8NrfB7WohxYunh0MyvX1KVk67tKfMHG9KdjaqKHrum
+KINDE_ISSUER_URL=https://ramdani.kinde.com
+KINDE_SITE_URL=http://localhost:3000
+KINDE_POST_LOGOUT_REDIRECT_URL=http://localhost:3000
+KINDE_POST_LOGIN_REDIRECT_URL=http://localhost:3000/
+```
 
-## Deploy on Vercel
+Login Admin
+```bash
+  username  : admin
+  password  : @admin123
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Tech Stack
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+**Client:** NextJS, TailwindCSS
+
+**Server:** NextJS, Strapi, Post Grace
+
+
+## Support
+
+For support, email muhamadramdani0519@gmail.com
