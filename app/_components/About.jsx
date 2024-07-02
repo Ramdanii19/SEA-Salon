@@ -13,7 +13,7 @@ const About = () => {
         className="mt-5 sm:w-32 xl:w-40"
       />
       <div className=" mt-10 mb-24 sm:w-3/4 lg:w-4/6 xl:w-1/2">
-        <p className="text-abuterang max-w-4xl text-justify lg:text-md xl:text-xl">Captain barbershop adalah tempat cukur rambut mewah terbesar di Indonesia. Sejak didirikan pada tahun 2015, Captain Barbershop telah berkembang menjadi 100 cabang di Jabodetabek, Karawang, Bandung, Surabaya, Medan dan Karawang. Pada tahun 2024 kami berencana untuk memperluas cabang kami hingga 130 cabang</p>
+        <p className="text-abuterang max-w-4xl text-justify lg:text-md xl:text-xl">SEA Salon adalah tempat perawatan rambut dan kecantikan mewah terbesar di Indonesia. Sejak didirikan, SEA Salon telah berkembang pesat dengan berbagai layanan unggulan dan fasilitas modern. Kami berkomitmen untuk memberikan pengalaman terbaik bagi setiap pelanggan, dengan para profesional yang berpengalaman dan produk berkualitas tinggi</p>
       </div>
     </div>
   )

@@ -24,6 +24,8 @@ import { CalendarDays, Clock } from 'lucide-react'
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import GlobalApi from '../_utils/GlobalApi'
 import { toast } from 'sonner'
+import { Input } from "@/components/ui/input"
+import { LoginLink } from "@kinde-oss/kinde-auth-nextjs/components";
 
 const Booking = () => {
 
@@ -34,6 +36,7 @@ const Booking = () => {
   const { user } = useKindeBrowserClient();
   const [reservation, setReservation] = useState();
   const [duration, setDuration] = useState(1);
+  const [telepon, setTelepon] = useState('');
 
   const isPastDay = (day) => {
     return day <= new Date();
@@ -63,7 +66,7 @@ const Booking = () => {
       data: {
         User_id: user.id,
         Username: user.given_name + " " + user.family_name,
-        Email: user.email,
+        Phone: telepon,
         Time: selectedTimeSlot,
         Date: date,
         Reservation: reservation
@@ -90,6 +93,7 @@ const Booking = () => {
     })
   }
 
+
   const handleServiceChange = (value) => {
     const selectedService = services.find(service => service.attributes.Name === value);
     if (selectedService) {
@@ -104,9 +108,15 @@ const Booking = () => {
     <Dialog >
       <DialogTrigger asChild>
         <div className="inline-block">
-          <Button className="px-4 py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 lg:px-10 lg:py-5 xl:px-12 xl:py-6 border-2 border-white text-white bg-transparent">
-            Book Appointment
-          </Button>
+          {user ?
+            <Button className="px-4 py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 lg:px-10 lg:py-5 xl:px-12 xl:py-6 border-2 border-white text-white bg-transparent hover:border-gold hover:text-black hover:font-bold ">
+              Book Appointment
+            </Button>
+            :
+            <LoginLink> <Button className="px-4 py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 lg:px-10 lg:py-5 xl:px-12 xl:py-6 border-2 border-white text-white bg-transparent hover:border-gold hover:text-black hover:font-bold ">
+              Book Appointment
+            </Button></LoginLink>
+          }
         </div>
       </DialogTrigger>
       <DialogContent>
@@ -114,7 +124,7 @@ const Booking = () => {
           <DialogTitle>Book Appointment</DialogTitle>
           <DialogDescription>
             <div className="">
-              <div className="grid grid-cols-1 md:grid-cols-2 mt-5">
+              <div className="grid grid-cols-1 md:grid-cols-2 mt-5 ">
                 <div className="flex flex-col gap-3 items-baseline">
                   <h2 className='flex gap-2 items-center'>
                     <CalendarDays className='text-gold w-5 h-5' />
@@ -125,7 +135,7 @@ const Booking = () => {
                     selected={date}
                     onSelect={setDate}
                     disabled={isPastDay}
-                    className="rounded-md border"
+                    className="rounded-md border-2"
                   />
                 </div>
                 <div className="mt-3 md:mt-0">
@@ -133,20 +143,21 @@ const Booking = () => {
                     <Clock className='text-gold h-5 w-5' />
                     Select Time Slot
                   </h2>
-                  <div className="grid grid-cols-3 gap-2 border rounded-lg p-5">
+                  <div className="grid grid-cols-3 gap-2 border-2  rounded-lg p-5">
                     {timeSlot?.map((item, index) => (
                       <h2
                         onClick={() => setSelectedTimeSlot(item.time)}
                         key={index}
-                        className={`p-2 border text-center hover:bg-gold hover:text-white cursor-pointer rounded-full ${item.time == selectedTimeSlot && 'bg-gold text-white'}`}>
+                        className={`p-2 border-2 text-center hover:bg-gold hover:text-white cursor-pointer rounded-full ${item.time == selectedTimeSlot && 'bg-gold text-white'}`}>
                         {item.time}
                       </h2>
                     ))}
                   </div>
                 </div>
-                <div className="">
+                <div className=" justify-start items-end flex">
+
                   <Select onValueChange={handleServiceChange}>
-                    <SelectTrigger className="w-[180px]">
+                    <SelectTrigger className="w-11/12">
                       <SelectValue placeholder="Select Service" />
                     </SelectTrigger>
                     <SelectContent>
@@ -156,9 +167,18 @@ const Booking = () => {
                     </SelectContent>
                   </Select>
                 </div>
-              </div>
-              <div className="mt-5">
-                <h2>Duration: {duration} hour(s)</h2>
+                <div>
+                  <div className="items-center text-white mt-4 ">
+                    <p>No Tlpn</p>
+                    <Input
+                      type="text"
+                      placeholder="Masukkan nomor telpon Anda"
+                      className="border-2 text-black"
+                      value={telepon}
+                      onChange={(e) => setTelepon(e.target.value)}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </DialogDescription>
@@ -166,10 +186,7 @@ const Booking = () => {
         <DialogFooter className="sm:justify-start">
           <DialogClose asChild>
             <>
-              <Button type="button" className="text-red-500 border-red-500" variant="outline">
-                Close
-              </Button>
-              <Button type="button" disabled={!(date && selectedTimeSlot && reservation)} onClick={() => saveBooking()}>
+              <Button type="button" disabled={!(date && selectedTimeSlot && reservation && telepon)} onClick={() => saveBooking()}>
                 Submit
               </Button>
             </>

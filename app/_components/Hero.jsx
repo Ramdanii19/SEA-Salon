@@ -3,9 +3,13 @@ import React from 'react'
 import { Button } from "@/components/ui/button"
 import Link from 'next/link'
 import Booking from './Booking'
+// import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 
 
 const Hero = () => {
+  // const { user, permissions } = useKindeBrowserClient();
+  // const isAdmin = permissions.permissions.includes('admin');
+
   return (
     <div className="flex items-center bg-background bg-cover bg-center h-screen w-full">
       <div className="px-6 sm:px-12 md:px-24 xl:px-36 w-full">
@@ -29,9 +33,6 @@ const Hero = () => {
           </p>
         </div>
         <div className="flex justify-center lg:justify-start mt-6">
-          {/* <Link href="/booking"><Button className="px-4 py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 lg:px-10 lg:py-5 xl:px-12 xl:py-6 border-2 border-white text-white bg-transparent">
-            Get An Appointment!
-          </Button></Link> */}
           <Booking />
         </div>
       </div>
