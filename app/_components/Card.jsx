@@ -5,7 +5,7 @@ import React from 'react';
 const cardData = [
   {
     id: 1,
-    img: '/Haircuts.png',
+    img: '/haircuts.png',
     title: 'Haircuts and Styling',
     description: 'Pemotongan rambut kami dirancang untuk merawat dan menjaga panjang serta kesehatan rambut Anda, dengan fokus pada hasil terbaik dan gaya yang sesuai dengan keinginan Anda'
   },
